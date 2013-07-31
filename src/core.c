@@ -342,7 +342,10 @@ static void convert_A_to_B(struct mtdev_state *state,
 
 struct mtdev *mtdev_new(void)
 {
-	return calloc(1, sizeof(struct mtdev));
+	struct mtdev *dev = malloc(sizeof(struct mtdev));
+	if (dev)
+		mtdev_init(dev);
+	return dev;
 }
 
 int mtdev_init(struct mtdev *dev)
