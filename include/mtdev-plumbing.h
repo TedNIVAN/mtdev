@@ -33,16 +33,8 @@
 extern "C" {
 #endif
 
+#include <libmtdev.h>
 #include <mtdev.h>
-
-/**
- * mtdev_new - allocate a new mtdev
- *
- * Allocate a new mtdev.
- *
- * Returns zero in case of memory allocation failure.
- */
-struct mtdev *mtdev_new(void);
 
 /**
  * mtdev_init - initialize mtdev converter
@@ -100,48 +92,6 @@ int mtdev_configure(struct mtdev *dev, int fd);
  * a standard negative error number is returned.
  */
 int mtdev_fetch_event(struct mtdev *dev, int fd, struct input_event *ev);
-
-/**
- * mtdev_put_event - put an event into the converter
- * @dev: the mtdev in use
- * @ev: the kernel input event to put
- *
- * Put a kernel event into the mtdev converter. The event should
- * come straight from the device.
- *
- * This call does not block; if the buffer becomes full, older events
- * are dropped. The buffer is guaranteed to handle several complete MT
- * packets.
- */
-void mtdev_put_event(struct mtdev *dev, const struct input_event *ev);
-
-/**
- * mtdev_empty - check if there are events to get
- * @dev: the mtdev in use
- *
- * Returns true if the processed event queue is empty, false otherwise.
- */
-int mtdev_empty(struct mtdev *dev);
-
-/**
- * mtdev_get_event - get processed events from mtdev
- * @dev: the mtdev in use
- * @ev: the input event to fill
- *
- * Get a processed event from mtdev. The events appear as if they came
- * from a type B device emitting MT slot events.
- *
- * The queue must be non-empty before calling this function.
- */
-void mtdev_get_event(struct mtdev *dev, struct input_event* ev);
-
-/**
- * mtdev_delete - free a previously allocated mtdev
- *
- * Frees the memory associated with the mtdev and invalidates the
- * mtdev pointer.
- */
-void mtdev_delete(struct mtdev *dev);
 
 #ifdef __cplusplus
 }

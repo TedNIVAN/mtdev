@@ -5,6 +5,7 @@ libmtdev_la_LDFLAGS = -version-info @LIB_VERSION@
 libmtdev_la_SOURCES = \
 	$(top_srcdir)/include/mtdev-mapping.h \
 	$(top_srcdir)/include/mtdev-plumbing.h \
+	$(top_srcdir)/include/libmtdev.h \
 	common.h \
 	evbuf.h \
 	iobuf.h \
@@ -22,6 +23,7 @@ AM_CPPFLAGS = -I$(top_srcdir)/include/
 
 libmtdevincludedir = $(includedir)
 libmtdevinclude_HEADERS = \
+	$(top_srcdir)/include/libmtdev.h \
 	$(top_srcdir)/include/mtdev-mapping.h \
 	$(top_srcdir)/include/mtdev-plumbing.h \
 	$(top_srcdir)/include/mtdev.h
