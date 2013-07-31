@@ -1,4 +1,4 @@
-noinst_PROGRAMS = mtdev-mapgen mtdev-matching mtdev-kernel
+noinst_PROGRAMS = mtdev-mapgen mtdev-matching mtdev-kernel mtdev-libmtdev
 bin_PROGRAMS = mtdev-test
 
 AM_CPPFLAGS=-I$(top_srcdir)/include/
@@ -13,3 +13,6 @@ mtdev_test_LDFLAGS = -lmtdev -L$(top_builddir)/src/.libs/
 
 mtdev_kernel_SOURCES = mtdev-kernel.c
 mtdev_kernel_LDFLAGS = -L$(top_builddir)/src/.libs/ -lmtdev
+
+mtdev_libmtdev_SOURCES = mtdev-libmtdev.c
+mtdev_libmtdev_LDFLAGS = -L$(top_builddir)/src/.libs/ -lmtdev
