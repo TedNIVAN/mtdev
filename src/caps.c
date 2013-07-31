@@ -230,3 +230,43 @@ void mtdev_set_abs_resolution(struct mtdev *dev, int code, int value)
 		abs->resolution = value;
 }
 
+void mtdev_set_abs(struct mtdev *dev, int code, const struct input_absinfo *abs)
+{
+	int ix;
+	int sn;
+
+	if (code == ABS_MT_SLOT || abs == NULL)
+		return;
+	ix = mtdev_abs2mt(code);
+	if (!ix)
+		return;
+
+	*get_info(dev, code) = *abs;
+
+	ix = mtdev_abs2mt(code);
+	if (ix < LEGACY_API_NUM_MT_AXES)
+		dev->has_abs[ix] = 1;
+	else
+		dev->state->has_ext_abs[ix - LEGACY_API_NUM_MT_AXES] = 1;
+
+	switch(code) {
+		case ABS_MT_POSITION_X:
+		case ABS_MT_POSITION_Y:
+			dev->has_mtdata = mtdev_has_mt_event(dev, ABS_MT_POSITION_X) &&
+					  mtdev_has_mt_event(dev, ABS_MT_POSITION_Y);
+			sn = SN_COORD;
+			break;
+		case ABS_MT_TOUCH_MAJOR:
+		case ABS_MT_TOUCH_MINOR:
+		case ABS_MT_WIDTH_MAJOR:
+		case ABS_MT_WIDTH_MINOR:
+			sn = SN_WIDTH;
+			break;
+		case ABS_MT_ORIENTATION:
+			sn = SN_ORIENT;
+			break;
+	}
+
+	if (sn)
+		default_fuzz(dev, code, sn);
+}

@@ -127,6 +127,17 @@ int mtdev_get_abs_fuzz(const struct mtdev *dev, int code);
 int mtdev_get_abs_resolution(const struct mtdev *dev, int code);
 
 /**
+ * mtdev_set_abs - enable axis and set abs axis information
+ * @dev: the mtdev in use
+ * @code: the ABS_MT code to set
+ * @abs: abs axis information
+ *
+ * Enables the given axis on the device and changes the various axis ranges
+ * to the data given here.
+ */
+void mtdev_set_abs(struct mtdev *dev, int code, const struct input_absinfo *abs);
+
+/**
  * mtdev_idle - check state of kernel device
  * @dev: the mtdev in use
  * @fd: file descriptor of the kernel device
